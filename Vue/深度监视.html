@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        
+        <h2>今天天气很{{info}}</h2>
+        <button @click="changeWheater">点我切换天气</button>
+        <h2>a的值是{{numbers.a}}</h2>
+        <button @click="numbers.a++">点我让a+1</button>
+        <h2>b的值是{{numbers.b}}</h2>
+        <button  @click="numbers.b++">点我让b+1</button>
+    </div>
+    <script>
+        // 深度监视
+    //     (1)vue中的watch默认不监视对象内部值的改变（一层）
+    //     (2)配置deep:true可以开启深度监视，监视多层值的改变
+       Vue.createApp({
+        data(){
+            return{
+                isHot:true,
+                numbers:{
+                    a:1,
+                    b:1
+                }
+            }
+            
+        },
+        computed:{
+            info(){
+                return this.isHot?"炎热":"凉爽";
+            }
+        },
+        methods:{
+            changeWheater(){
+                this.isHot=!this.isHot
+            }
+            // numbers.a++(){
+
+            // }
+        },
+        watch:{
+            isHot:{
+                handler(newValue,oldValue){
+                    console.log('infochange',newValue,oldValue);
+                }
+            },
+            //监视多级结构中多个属性的变化
+            'numbers.a':{
+                handler(){
+                    console.log('a的值被改变了');
+                }
+            },
+            'numbers.b':{
+                handler(){
+                    console.log('b的值被改变了');
+                }
+            },
+            // 监视多级结构中所有属性的变化
+            numbers:{
+                handler(){
+                    deep:true,
+                    console.log('numbers中数据变化了');
+                }
+            }
+        }
+        }).mount('#root');
+        
+    </script>
+</body>
+</html>

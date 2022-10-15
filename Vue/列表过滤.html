@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+    
+    </div>
+    <script>
+        Vue.createApp({
+            data(){
+                return {
+                    keyWord:'',
+                    person:[
+                        { id:"001",name:"马冬梅",sex:"女",age:18},
+                        { id:"002",name:"马丽",sex:"女",age:13},
+                        { id:"003",name:"周杰伦",sex:"男",age:28},
+                        { id:"004",name:"郭富城",sex:"男",age:19},
+                    ],
+                    // filperson:[],
+                    sortType:0
+                }
+                
+            },
+
+            // watch:{
+            //     keyWord:{
+            //         immediate:true,
+            //         handler(val){
+            //             const arr=this.filperson=this.person.filter((p)=>{
+            //                 // console.log('wodo');
+            //                 return p.name.indexOf(val) !==-1
+            //                 if(this.sortType)
+            //                 {
+            //                     arr.sort((p1,p2)=>{
+            //                         return this.sortType===1?p2.age-p1.age:p1.age-p2.age
+            //                     })
+            //                 }
+            //                 return arr
+            //             })
+            //         }
+            //     }
+            // },
+            computed:{
+                filperson(){
+                const arr=this.person.filter((p)=>{
+                        return p.name.indexOf(this.keyWord) !==-1
+                })
+                if(this.sortType){
+                                arr.sort((p1,p2)=>{
+                                    return this.sortType===1?p2.age-p1.age:p1.age-p2.age
+                                })
+                            }
+                            return arr
+                        }
+                },
+            template:`
+            <h2>人员列表</h2>
+            <input type="text" placeholder="请输入姓名" v-model="keyWord">
+            <button @click="sortType=0">原序排列</button>
+            <button @click="sortType=1">年龄升序</button>
+            <button @click="sortType=2">年龄降序</button>
+            <ul>
+            <li v-for="(p,index) of filperson" :key="index">
+                    {{p.name}}--{{p.age}}--{{p.sex}}
+             </li>
+             </ul>
+            `
+        }).mount("#root")
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .area {
+            position: absolute;
+            left: 50%;
+            top:50%;
+            transform: translate(-50%,-50%);
+            width: 200px;
+            height: 300px;
+            background: #000;
+        }
+        .mask {
+            color: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            background: #000;
+            opacity: 0.5;
+            font-size: 100px;
+        }
+    </style>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        //teleport传输门
+        const app=Vue.createApp({
+            data(){
+                return {
+                    show:false
+                }
+            },
+            methods:{
+                handleBtnClick(){
+                    this.show=!this.show;
+                }
+            },
+            //声明局部指令
+            //通过teleport这样的语法就可以将它传输在body身上，而不仅仅只在div上
+            template:`
+            <div class="area">
+                <button @click="handleBtnClick">按钮</button>
+                <teleport to="body">
+                    <div class="mask" v-show="show"></div>
+                </teleport>
+            </div>`
+        })
+       
+ 
+        
+        
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

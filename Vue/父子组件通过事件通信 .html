@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const app=Vue.createApp({
+            data(){
+                return{
+                    data:counter
+                }
+            },
+            methods:{
+                //可以通过param传递
+                handClick(param1,param2){
+                    this.counter+=param1
+                }
+            },
+            //监听一个组件的触发事件时，不能使用驼峰命名需要把 addOne变为add-one
+            template:'<div><counter content="hi" @add-one="handClick"/></div>'
+        })
+        //单项数据流的概念：子组件可以使用父组件传过来的数据，但是绝对不能修改传递过来的数据
+        //但是我们可以通过
+        app.component('counter',{
+            props:['msg'],
+            //校验触发事件
+            emits:{
+                add:(count)=>{
+                    if(count>0){
+                        return true;
+                    }
+                    return false
+                }
+            },
+            //通过告诉父组件修改父组件中的值
+            methods:{
+                addOne(){
+                    //这个函数会触发这个事件  在这里可以使用驼峰命名法  额外带的参数通过param向父组件传递值
+                    this.$emit('addOne',2,3)
+                }
+            },
+            template:`<div @click="addOne">counter</div>
+            `
+        })
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

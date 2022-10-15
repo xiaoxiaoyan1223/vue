@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <p>1、当监视属性变化时，回调函数自动执行
+        2、监视的属性必须存在才能被监视
+        3、监视的两种写法：
+         1)new Vue时传入watch配置
+         2)通过vm.$watch
+    </p>
+
+    <div id="root">
+        <h2>今天天气很{{info}}</h2>
+        <button @click="changeWheater">点我切换天气</button>
+    </div>
+    <script>
+       Vue.createApp({
+        data(){
+            return{
+                isHot:true,
+            }
+            
+        },
+        computed:{
+            info(){
+                return this.isHot?"炎热":"凉爽";
+            }
+        },
+        methods:{
+            changeWheater(){
+                this.isHot=!this.isHot
+            }
+        },
+        // watch:{
+            // isHot:{
+                // handler(newValue,oldValue){
+                //     console.log('infochange',newValue,oldValue);
+                // }
+            // }
+        // }
+        }).mount('#root');
+        vm.$watch('isHot',{
+            handler(newValue,oldValue){
+                    console.log('infochange',newValue,oldValue);
+                }
+
+        })
+    </script>
+</body>
+</html>

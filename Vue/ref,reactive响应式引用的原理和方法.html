@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <script>
+        //原理:通过proxy对数据进行封装，当数据变化时，触发模板等内容的更新
+        //ref处理基础类型的数据
+        //reactive处理非基础类型的数据
+    const app=Vue.createApp({
+            template:`
+            <div @click="handleClick">
+               name:{{name.value}},age:{{age}}
+            </div>
+            `,
+            methods:{
+                test(){
+                    console.log(this.$options);
+                }
+            },
+            //created实例被完全初始化之前
+            //setup不可以调用外部的方法
+            //基本类型数据经过ref处理后，会通过proxy使dell变成proxy({value:'dell'}),变成一个响应式引用
+            setup(props,context){
+                //setup函数return的所有内容会暴露到外部，在模板中可以直接去使用
+                //从vue中引入ref方法即可
+            //ref
+                // const {ref}=Vue;
+                // let name=ref("dell");
+                // setTimeout(()=>{
+                //     name.value='lee'
+                // },2000)
+                // return {name}
+                // handleClick:()=>{
+                //     console.log(11);
+                // }
+            //reactive
+                    const {reactive,toRefs}=Vue;
+                    const nameObj=reactive({name:'lili'})
+                    setTimeout(()=>{
+                    nameObj.name='lee'
+                    },2000)
+                    //toRefs原理  本来是proxy({'name:"lee"'})经过toRefs后会转变为{name:proxy({'name:"lee"'})}
+                    //name本身结构出来就是字符串不具备响应式，所以需要经过toRef对nameObj进行包装后在结构
+                    const {name}=toRef(nameObj)
+                    return {name}
+            }
+        })
+        
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

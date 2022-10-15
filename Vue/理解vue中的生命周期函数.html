@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <script>
+        //生命周期函数：在某一时刻会 自动执行的函数
+        const app=Vue.createApp({
+            //data里面存入的参数
+            data(){
+                return {
+                    message:'hello world'
+                }
+            },
+            //在实例生成之前会自动执行的函数
+            beforeCreate(){
+                console.log('befoerCreate');
+            },
+            //在实例生成之后会自动执行的函数
+            created(){
+                console.log('created');
+            },
+            //在组件内容被渲染到页面之前立即执行的函数
+            beforeMount(){
+                console.log('beforeMount');
+            },
+            //在组件内容被渲染到页面之后会自动执行的函数
+            mounted(){
+                alert('我自动执行了')
+            },
+            //当数据发生变化会立即执行的函数
+            beforeUpdate(){
+                console.log(document.getElementById('root').innerHTML,'beforeUpdate');
+            },
+            //当数据发生变化，页面重新渲染后，会自动执行的函数
+            updated(){
+                console.log(document.getElementById('root').innerHTML,'updated');
+            },
+            //当vue失效后自动执行的函数
+            beforeUnmount(){
+                console.log('beforeUnmount');
+            },
+            //当vue失效且dom完全销毁后，自动执行的函数
+            unmounted(){
+                console.log('unmount');
+            },
+            template:'<div>{{message}}</div>'
+        });
+        //vm代表的就是vue应用的根组件
+        const vm=app.mount('#root');
+    </script>
+</body>
+</html>

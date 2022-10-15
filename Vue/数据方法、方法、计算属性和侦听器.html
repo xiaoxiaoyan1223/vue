@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <script>
+        //data methods computed watcher
+        //能用 methods 和 computed实现的  优先使用computed  因为有缓存
+        //能用 watch  和 computed实现的   优先使用computed  因为简洁
+        const app=Vue.createApp({
+            //可以在后台通过vm.$data.message= 对message进行修改
+            data(){
+                return {
+                    message:"hello word",
+                    count:1,
+                    price:7,
+                    newTotal:10
+                    
+                }
+            },
+            //监听器 当price发生变化时，函数会执行
+            watch:{
+                price(current,pre){
+                    console.log(current,pre);
+                    this.newTotal=current*this.count;
+                }
+            },
+            //计算对象  当计算属性依赖的内容发生变更时，才会重新执行计算
+            computed:{
+                total(){
+                    return this.price*this.count;
+                }
+            },
+            methods:{
+                //这里注意不能使用箭头函数 
+                handleClick(){
+                    console.log('click',this.message);//这个this自动指向上面的data里面的数据、、
+                },
+                formatString(string){
+                    return string.toUpperCase()
+                },
+                //只要页面重新渲染，就会重新计算
+                getTotal(){
+                    return Date.new();
+                }
+            },
+            template:`<div>{{formatString(message)}}</div>
+                      <div>{{total}}</div>`
+        });
+        const vm=app.mount('#root');
+    </script>
+</body>
+</html>

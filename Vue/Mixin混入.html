@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        //mixin混入
+        // const myMixin={
+        //     data(){
+        //         return{
+        //             number:2,
+        //             count:111
+        //         }
+        //     }
+        // }
+        const app=Vue.createApp({
+            data(){
+                return{
+                    number:1
+                }
+            },
+            zdy:666,
+            //混入的内容和组件的内容相同的话，优先使用组件的内容
+            //组件data、methods 自定义的属性优先级高于mixin里面的
+            //生命周期函数先执行mixin再执行组件里面的
+            mixins:[myMixin],
+            methods:{
+                handleClick(){
+                    console.log('okk');
+                }
+            },
+            template:`
+            <div>
+                <div>
+                    {{number}}
+                </div>
+                <div>
+                    {{this.$options.zdy}}
+                </div>
+                <child />
+                <button @click="handleClick"></button>
+            <div/>`
+        })
+        //要想混入的优先级高于组件的优先级
+        app.config.optionMergeStragies.zdy=(mixinVal,appValue)=>{
+            return mixinVal||appValue
+        }
+        //定义全局的mixin  但不太推荐使用，维护性不高
+        app.mixin({
+            data(){
+                return{
+                    number:2,
+                    count:111
+                }
+            },
+            created(){
+                console.log('mixin created');
+            },
+            methods:{
+                handleClick(){
+                    console.log('mixin click');
+                }
+            }
+        })
+        app.component('child',{
+            mixins:[myMixin],
+            template:`<div>{{count}}</div>`
+        })
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

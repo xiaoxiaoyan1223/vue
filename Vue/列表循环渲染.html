@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const app=Vue.createApp({
+            data(){
+                return {
+                    //遍历数组
+                    listArray:['first','second','third'],
+                    //遍历对象
+                    listObject:{
+                        firstname:"dell",
+                        lastname:'liat',
+                        job:"teacher"
+                    },
+                    //遍历字符串
+                    str:abcdefg
+                }
+            },
+            methods:{
+                //使用数组的变更函数push pop shift unshift
+                handleAddButtonClick(){
+                    this.listArray.push('hello')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                },
+                handleReduceButtonClick(){
+                    this.listArray.pop()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                },
+                handleAdd2ButtonClick(){
+                    this.listArray.shift('hello')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                },
+                handleReduce2ButtonClick(){
+                    this.listArray.unshift()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                },
+                //直接替换数组
+                handleChangeButtonClick(){
+                    this.listArray=['gao','guang','yuan']    
+                //直接添加对象的内容也可以展示出来
+                this.listObject.age=18,
+                this.listObject.sex="male"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                }
+                
+
+            },
+            //也可以直接循环数字
+            //循环的优先级高于判断 所以表示判断时需要再在里面创建一个div
+            //template是占位符 不会渲染页面
+            template:`<div>
+                    <template v-for="(item,index) in listArray" :key="index">
+                        <div v-if="key !==lastname">
+                            {{item}}----{{index}}
+                            </div>                   
+                    </template>
+                    <div v-for="item in 10">
+                        {{item}}
+                    </div>
+
+                    <button @click="handleAddButtonClick">新增</button>
+                    <button @click="handleReduceButtonClick">减少</button>
+                </div>`
+        })
+        const vm=app.mount("#root")
+    </script>
+</body>
+</html>

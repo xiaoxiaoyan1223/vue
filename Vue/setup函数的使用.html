@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <script>
+     //plugin插件，也是把通用性的功能封装起来
+     
+    const app=Vue.createApp({
+           
+        //   methods:{
+        //     setName(){},
+        //     setAge(){},
+        //     a(){},
+        //     b(){}
+        //   },
+        //   conputed:{
+
+        //   },
+        //   directives:{},
+          
+            template:`
+            <div @click="handleClick">
+               name:{{name}},age:{{age}}
+            </div>
+            `,
+            methods:{
+                test(){
+                    console.log(this.$options);
+                }
+            },
+            //created实例被完全初始化之前
+            //setup不可以调用外部的方法
+            setup(props,context){
+                //setup函数return的所有内容会暴露到外部，在模板中可以直接去使用
+                return{
+                    name:'dell'
+                }
+                handleClick:()=>{
+                    console.log(11);
+                }
+            }
+        })
+        
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

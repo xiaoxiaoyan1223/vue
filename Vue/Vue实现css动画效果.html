@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+         @keyframes leftToRight{
+            0%{
+                transform: translateX(-100px);
+            }
+            50%{
+                transform: translateX(-50px);
+            }
+            0%{
+                transform: translateX(0px);
+            }
+         }
+
+         .animation {
+            animation: leftToRight 3s;
+         }
+         /* .transition {
+            transition: 3s background-color ease;
+         }
+         .blue{
+            background:blue;
+         }
+         .green{
+            background:green;
+         }
+         .blue{
+            background:blue;
+         }
+         .transition {
+            transition: 3s background-color ease;
+         } */
+    </style>
+</head>
+<body>
+   <div id="root"></div>
+   <script>
+    const app=Vue.createApp({
+        data () {
+            return {
+                animate:{
+                    transition:true,
+                    blue:true,
+                    green:true
+                }
+            }
+           },
+            methods:{
+                handleClick(){
+                    this.animate.transition=!this.animate.transition
+                }
+            },
+            template:`<div>
+                <div :class="animate">hello world</div>
+                <button @click="handleClick">切换</button>
+                    </div>`
+        }
+    )
+    const vm=app.mount('#root')
+   </script>
+</body>
+</html>

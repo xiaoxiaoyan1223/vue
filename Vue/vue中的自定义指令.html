@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        //自定义指令directive
+        //定义局部的指令  在组件中使用时需要提前声明
+        const directives=directive('focus',{
+            focus:{
+                mounted(el){
+                el.focus()
+            }
+            }
+        })
+        const app=Vue.createApp({
+            //声明局部指令
+            directive:directives,
+            template:`
+            <div>
+                <div v-if='hello'>
+                    <input v-focus"/>
+                </div>
+            </div>`
+        })
+        //全局的自定义指令
+        app.directive('focus',{
+            //在mounted中的东西挂载到页面之前会执行
+            beforeMount(el){
+                console.log('beforeMount');
+            },
+            mounted(el){
+                el.focus()
+            },
+            beforeUpdate(el){
+                console.log('beforeUpdate');
+            },
+            Updated(el){
+                console.log('Updated');
+            },
+            beforeUnmount(){
+                console.log('beforeUnmount');
+            },
+            unmounted(){
+                console.log('unmounted');
+            }
+        })
+        
+        
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

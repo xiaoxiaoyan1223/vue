@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const app=Vue.createApp({
+            data(){
+                return{
+                    num:()=>{
+                        alert(123)
+                    }
+                }
+            },
+            template:`
+            <div><test :content="num" /></div>`
+        });
+        //用data-abc命名时，下面接收数据时用dataAbc
+        //单项数据流的概念：子组件可以使用父组件传过来的数据，但是绝对不能修改传递过来的数据，不允许直接通过绑定函数修改props接收到的数据  除非在data中重新定义这个数据
+        //props:['content']
+        // data(){
+        //     return{
+        //         myCount:this.count,
+        //     }
+        // }
+        //String,Boolean,Array,Object,Function
+        //required 必填
+        //default 默认值
+        app.component('test',{
+            //接收外部传进来的参数
+            props:{
+                //校验的类型
+                content:{
+                type:Function,
+                //增加校验条件的方法
+                validator:function(value){
+                    return value<10000
+                },
+                default:789
+                }
+            },
+            methods:{
+                handleClick(){
+                    alert(456)
+                    this.content()
+                }
+            },
+            //接收值的时候是双花括号语法
+            template:`<div @click="this.handleClick">{{content}}</div>
+            <div>{{typeof content}}</div>`
+        })
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

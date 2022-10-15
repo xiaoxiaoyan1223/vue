@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        //定义全局组件 全局组件，只要定义了处处可以使用，但性能不高
+        // app.component('counter-parent',{
+        //     template:`<counter />`
+        // }),
+        // app.component('counter',{
+        //     data(){
+        //         return{
+        //             counter:1
+        //         }
+        //     },
+        //     template:`<div @click='counter+=1'>{{counter}}</div>`
+        // })
+        //定义局部组件 定义了注册之后才能使用，建议大写字母开头，驼峰命名
+        const Counter={
+            data(){
+                return{
+                    counter:1
+                }
+            },
+            template:`<div @click='counter+=1'>{{counter}}</div>`
+        }
+        const HelloWorld={
+            template:`<div>hello world</div>`
+        }
+        const app=Vue.createApp({
+            components:{
+                Counter,HelloWorld
+                
+            },
+            template:`<counter />
+            <HelloWorld />
+            `
+        })
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

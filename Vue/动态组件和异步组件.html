@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@qq.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const app=Vue.createApp({
+            data(){
+                return{
+                    currentItem:'input-item'
+                }
+            },
+            methods:{
+                handClick(){
+                    if(this.currentItem==='input-item')
+                    {
+                        this.currentItem='common-item'
+                    }else{
+                        this.currentItem==='input-item'
+                    }
+                }
+            },
+            // template:`
+            
+            // <input-item v-show='currentItem===“input-item"' />
+           
+            // <common-item v-show='currentItem===“input-item"' />
+            // <button @click="handClick">切换</button>`
+            //动态组件：根据数据的变化，结合component这个标签，随时动态切换组件的实现
+            //动态组件component 第一次渲染的时候keep-alive会缓存数据
+            // template:`
+            // <keep-alive>
+            //     <component :is="currentItem" />
+            // <keep-alive/>
+            // <common-item v-show='currentItem===“input-item"' />
+            // <button @click="handClick">切换</button>`
+            //异步组件 <async-common-item/>
+            template:`<div>hello world<div/>`
+
+        })
+    
+        app.component('input-item',{
+            
+            template:`<input />`
+        })
+        app.component('common-ite',{
+            template:`<div>hello world</div>`
+        })
+        const vm=app.mount('#root')
+        </script>
+</body>
+</html>

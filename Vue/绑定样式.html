@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<style>
+    .basic{
+        width: 200px;
+        height: 200px;
+        background-color: blue;
+    }
+    
+    .normal {
+        background-color: aqua;
+    }
+    .happy {
+        background-color: lightpink;
+    }
+    .sad {
+        background-color: darkgray;
+    }
+</style>
+<body>
+    <!-- 绑定class样式，字符串写法，适用于：样式的类名不能确定，需要动态指定 -->
+    <div id="root" class="basic" :class="mood" @click="changeMood">点我切换心情</div>
+    <!-- 绑定class样式--数组写法适用于：要绑定的样式的个数以及名字都不能确定 -->
+    <div class="basic" :class="classArr"></div>
+    <!-- 绑定clsaa样式对象的写法，适用于：绑定的样式个数、名字确定，但要动态决定是否使用 -->
+    <div class="basic" :class="classObj"></div>
+    <script>
+        Vue.createApp({
+            data(){
+                return{
+                    mood:'happy',
+                    classArr:['a','b','c'],
+                    classObj:{
+                        a:false,
+                        b:true,
+                        c:true
+                    }
+                }
+            },
+            methods:{
+                changeMood(){
+                    const arr=['normal','happy','sad']
+                    const index=Math.floor(Math.random()*3)
+                    console.log(index);
+                    this.mood=arr[index]
+                }
+            }
+        }).mount("#root")
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div class="box" id="root"></div>
+    <script>
+        const app=Vue.createApp({
+            data(){
+                return{
+                    counter:2,
+                    counter1:1,
+                    count:'a'
+                }
+            },
+            // methods:{
+            //     changenoe(count1){
+            //         this.counter1=count1
+            //     },
+            //     upData(count){
+            //         this.counter=count
+            //     }
+            // },
+            //这样比较麻烦 可以写两个v-model
+            // template:`<counter v-model="counter" :counter="counter1" :modelValue="counter" @change-count-one="changenoe" @updata:modelValue="upData"/>`
+
+            // template:`<counter v-model:counter="counter" v-model:counter1="counter1" />`
+            //利用自定义的修饰符实现某种功能
+            template:`<counter v-model.uppercase="count" />`
+
+        })
+        app.component('counter',{
+            // props:["counter","counter1"],
+            props:{
+                //如果v-model有修饰符，则modelModifiers返回为true
+                'modelValue':String,
+                'modelModifiers':{
+                    default:()=>({})
+                }
+            },
+            methods:{
+                handleClick3(){
+                    let newValue=this.modelValue+'b';
+                    if(this.modelModifiers.uppercase){
+                        newValue=newValue.toUpperCase()
+                    }
+                    this.$emit('update:modelValue',newValue)
+                },
+                // handleClick(){
+                //     this.$emit('update:counter',this.counter+2)
+                // },
+                // handleClick1(){
+                //     // this.$emit('updata:count',this.modelValue+2)
+                //     this.$emit('update:counter1',this.counter1+3)
+                // }
+            },
+            // template:`<div @click="handleClick">{{counter}}</div>
+            // <div @click="handleClick1">{{counter1}}</div>
+            // <div @click="handleClick3">{{modelValue}}</div>`
+            template:`
+            <div @click="handleClick3">{{modelValue}}</div>`
+
+        })
+        const vm=app.mount("#root")
+    </script>
+    
+</body>
+</html>

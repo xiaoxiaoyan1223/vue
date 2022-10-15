@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        //input textarea checkbox radio select都可以实现双向绑定指令
+        //修饰符 v-model.lazy(等到失去焦点才同步输入框的内容),v-model.number,v-model.trim(消去字符串前后的空格)
+        const app=Vue.createApp({
+            data(){
+                return{
+                  message:"hello",
+                  //checkbox
+                  message1:[],
+                  //radio
+                  message2:'',
+                  //section
+                  message3:''
+                    }
+                },
+            //v-model="" 来实现双向绑定
+            template:`<input v-model:"message"/>
+            jack <input type="radio" v-model="message2" value="jack"/>
+            dell <input type="radio" v-model="message2" value="dell"/>
+            lee <input type="radio" v-model="message2" value="lee"/>
+            <select v-model="message3">
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+            </select>`
+            
+
+        })
+        //在vue下创建一个子组件
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

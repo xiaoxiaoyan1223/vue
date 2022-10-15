@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<style>
+    .red{
+        color: red;
+    }
+    .green {
+        color: green;
+    }
+</style>
+<body>
+    <div id="root"></div>
+    <script>
+        const app=Vue.createApp({
+            data(){
+                return{
+                    classString:'red',
+                    classObject:{red:false,green:true},
+                    classArry:["red","green"],
+                    styleObject:{
+                        color:"yellow",
+                        backgroundColor:"pink"
+                    }
+                }
+            },
+            //要想使用子组件，需要在父组件中声明
+            
+            template:`<div :class="classString">hello world</div>
+            <demo calss="green"/>
+            <div style="color:red">行内样式1</div>
+            <div :style="styleObject">行内样式2</div>`
+        })
+        //在vue下创建一个子组件
+        app.component('demo',{
+            //如果有多个div 则可以通过 :class="$attrs.class"添加父组件中声明的类
+            template:`<div :class="$attrs.class">single</div>
+                    <div :class="$attrs.class">two</div>`
+        })
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

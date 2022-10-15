@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <script>
+    //关于list的内容进行封装
+    const listReactiveEffect=()=>{
+        const {reactive}=Vue
+        const list=reactive([])
+        const addItemToList=(item)=>{
+            list.push(item)
+        }
+        return {list,addItemToList}
+    }
+    //关于inputValue的内容进行封装
+    const inputReactiveEffect=()=>{
+        const {ref}=Vue;
+        const inputValue=ref('123')
+        const handleInputValueChange=(e)=>{
+               inputValue.value=e.target.value
+        }
+        return{inputValue,handleInputValueChange}
+
+    }
+    const app=Vue.createApp({         
+            setup(){
+            //流程调度中转
+            const {list,addItemToList}=listReactiveEffect();
+            const {inputValue,handleInputValueChange}=inputReactiveEffect();
+                // const handleSubmit=()=>{
+                //     addItemToList(inputValue)
+                // }
+            
+            return {
+                    list,
+                    inputValue,
+                    handleInputValueChange,
+                    addItemToList
+                }
+            },
+            template:`
+           <div>
+                <div>
+                    <input :value="inputValue" @change="handleInputValueChange"/>
+                    <button @click="handleSubmit">提交</button>
+                </div>
+                <ul>
+                    <li v-for="(item,index) in list" :key="index">{{item}}</li>
+                    
+                </ul>
+           </div>
+            `
+        });      
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

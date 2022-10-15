@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <div v-if="show" >hello world</div>
+            <div v-show="show">hello world</div>
+            
+            <div v-if="show">if</div>
+            <div v-else>else</div>
+            <div v-if="n===1">喜洋洋</div>
+            <div v-if="n===2">懒洋洋</div>
+            <div v-if="n===3">美洋洋</div>
+            <button @click="n++">点我n+1</button>
+    </div>
+    <script>
+        Vue.createApp({
+            data(){
+                return{
+                   show:true,
+                   condition:true,
+                   n:1
+                    }
+                },
+                methods:{
+                 changeValue(){
+                    if(n===3)
+                    {
+                        this.n=1;
+                    }
+                    this.n++;
+                    console.log(this.n);
+                 }
+                }
+            //v-if控制的是div标签展示与否
+            //v-if 和v-show 如果频繁展示隐藏 建议使用v-show 不频繁了可以使用v-if
+            //v-if v-else 是一对 如果v-if展示，则v-else不展示 反之同
+            //template只能和v-if配合使用  当渲染页面的时候 template不显示
+
+        }).mount('#root')
+    </script>
+</body>
+</html>

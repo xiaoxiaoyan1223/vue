@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        //createApp表示创建一个Vue应用  
+        //传入的参数表示，这个应用最外层的组件，应该如何展示
+        // mvvm设计模式,m->model数据，v->view视图，vm->viewModel 数据视图连接
+        const app=Vue.createApp({
+            //data里面存入的参数
+            data(){
+                return {
+                    message:'hello world'
+                }
+            },
+            template:'<div>{{message}}</div>'
+        });
+        //vm代表的就是vue应用的根组件
+        const vm=app.mount('#root');
+        vm.$data.message
+    </script>
+</body>
+</html>

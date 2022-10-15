@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <!-- No-Prop属性 -->
+    <div id="root"></div>
+    <script>
+        const app=Vue.createApp({
+            template:'<div><counter msg="hello" content="hi"/></div>'
+        })
+        app.component('counter',{
+            // props:['msg'],
+            //不继承父组件传递过来的值
+            inheritAttrs:false,
+            //不通过props接收父组件传递过来的值，还可以通过v-bind="$attrs"添加全部属性  通过其他语法添加部分属性
+            template:`<div v-bind="$attrs">counter</div>
+            <div :msg="$attrs.msg">counter</div>
+            <div :content="$attrs.content">counter</div>`
+        })
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

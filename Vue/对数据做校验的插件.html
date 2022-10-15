@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <script>
+     //plugin插件，也是把通用性的功能封装起来
+     
+    const app=Vue.createApp({
+           data(){
+            return {
+                name:'all',
+                age:18
+            }
+          },
+          //自定义的
+            rule:{
+                age:{
+                    validate:age=>age<25,
+                    message:'too young,too simple'
+                }
+            },
+            template:`
+            <div>
+               name:{{name}},age:{{age}}
+            </div>
+            `
+        })
+        const validatorPlugin=(app,options)=>{
+            app.mixin({
+            created(){
+                for(let key in this.$options.rule){
+                    const item=this.$options.rule[key];
+                    this.$watch(key,()=>{
+
+                        // console.log(key+'changed');
+                        const result=item.validate(key)
+                        if(!result) console.log(item.message);
+                    })
+                    console.log(item);
+                }
+            }
+        })
+        }
+        //使用插件
+        app.use(validatorPlugin)
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

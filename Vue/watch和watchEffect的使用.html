@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <script>
+        //watch侦听器
+        //watchEffect也是监听器，偏向于effect  立即执行，没有惰性，不需要传递你要监听的内容，会自动感知，只需要传递回调函数
+            //不能获取之前的值
+    const app=Vue.createApp({  
+        setup(){
+            const {ref,toRefs,watch,reactive}=Vue;
+            // const name=ref("dell");
+            const nameObj=reactive({name:'dell',engname:'anna'})
+            //具备一定的惰性 lazy
+            //参数可以拿到原始值和当前值
+            //watch监听一个数据
+            // watch(name, (currentValue,prevValue)=>{
+            //     console.log(currentValue,prevValue)
+            // })
+            // watch监听多个数据
+            watch([()=>nameObj.name,()=>nameObj.engname], ([currentName,currentEngname],[prevName,prevEngname])=>{
+                console.log(currentName,prevName,'--',currentEngname,prevEngname)
+            })
+            const {name,engname}=toRefs(nameObj)
+            return {name,engname}
+        },    
+        template:`
+        <div>
+            <div>
+                Name:<input v-model="name">
+            </div>
+            <div>
+                Name is {{name}}
+            </div>
+        </div>
+            `,
+        });
+        
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>
