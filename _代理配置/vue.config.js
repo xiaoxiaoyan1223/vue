@@ -1,0 +1,36 @@
+moudle.exports={
+    pages:{
+        index:{
+            //入口
+            entry:'src.main.js'
+        },
+    },
+    lintOnSave:false,//关闭语法检查
+    //开启代理服务器(1)
+    /*devServer:{
+        proxy:'http://localhost:4000'
+    }
+    */
+   //开启代理服务器(2) 可以配置多个代理，且可以灵活控制是否走代理
+    devServer:{
+        proxy:{
+            '/api1':{
+                target:'http://localhost:4000',
+                //保证请求的那台服务器不带着/api
+                pathReWrite:{'^/api':''},
+                ws:true,
+                changeOrigin:true
+            },
+            '/api2':{
+                target:'http://localhost:4000',
+                //保证请求的那台服务器不带着/api
+                pathReWrite:{'^/api':''},
+                ws:true,
+                changeOrigin:true
+            }
+            //changeOrigin设置为true时，服务器收到请求头中的host为：localhost：5000(说假话)
+            //changeOrigin设置为false时，服务器收到请求头中的host为：localhost：8080（说真话）
+        }
+    }
+
+}
