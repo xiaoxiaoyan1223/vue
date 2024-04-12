@@ -1,0 +1,28 @@
+<template>
+    <h2>姓名：{{name}}</h2>
+    <h2>年龄：{{age}}</h2>
+    <h2>地址：{{addr.province}}-{{addr.city}}</h2>
+    <button @click="name='zhangsan'">修改名字</button>
+</template>
+<script lang='ts'>
+    import { reactive, toRefs } from 'vue'
+    export default {
+        setup() {
+            const user = reactive<any>({
+                name: '张三',
+                age: 19,
+                addr: {
+                    province: '河南',
+                    city: '郑州'
+                }
+            })
+            return {
+                // 响应式对象的处理，是加给对象的，如果对对象做了展开操作，那么就会丢失响应式的效果。
+                // 所以上面代码，单击button时，不能改变页面显示效果。
+                // ...user
+                // 使用toRefs可以保证对象展开的每个属性都是响应式的
+                ...toRefs(user)
+            }
+        }
+    }
+</script>
