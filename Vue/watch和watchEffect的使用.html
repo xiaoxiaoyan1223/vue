@@ -16,14 +16,20 @@
         setup(){
             const {ref,toRefs,watch,reactive}=Vue;
             // const name=ref("dell");
+            // cosnt sun=ref(0)
             const nameObj=reactive({name:'dell',engname:'anna'})
             //具备一定的惰性 lazy
             //参数可以拿到原始值和当前值
-            //watch监听一个数据
+            //watch监听ref定义的一个数据
             // watch(name, (currentValue,prevValue)=>{
             //     console.log(currentValue,prevValue)
             // })
-            // watch监听多个数据
+            //watch监听ref定义的多个数据，在vue3中也可以写多个watch监听器
+            watch([name,sum],(newvalue,oldvalue)={
+                console.log('name或sum变了',newvalue,oldvalue)
+            },{immediate:true})
+            // watch监听reactive监听的多个数据 ，注意此处无法获得正确的oldvalue，主要问题出在reactive上
+            // 在vue3中强制开启深度监视，但是在vue2中可以手动配置，如果要监听深层次的数据必须开启深度监视
             watch([()=>nameObj.name,()=>nameObj.engname], ([currentName,currentEngname],[prevName,prevEngname])=>{
                 console.log(currentName,prevName,'--',currentEngname,prevEngname)
             })
