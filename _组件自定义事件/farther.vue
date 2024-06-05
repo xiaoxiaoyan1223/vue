@@ -5,7 +5,8 @@
         <!-- 通过父组件给子组件绑定一个自定义事件实现:子给父传递数据(第一种方法，使用@或者v-on) -->
         <!-- <Child2 v-on:atguigu='demo'/> -->
         <!-- 通过父组件给子组件绑定一个自定义事件实现:子给父传递数据(第二种方法，使用ref) -->
-        <Child2 ref="student"/>
+        <!--使用自定义v-model-->
+        <Child2 ref="student" v-model="msg"/>
 
     </div>
 </template>
