@@ -36,6 +36,7 @@
         //     template:`<div>{{name}}</div>
         //     `
         // })
+       
         const app=Vue.createApp({
            setup(){
             const {ref,onMounted}=Vue
@@ -50,5 +51,38 @@
         })
         const vm=app.mount('#root')
     </script>
+     /*
+        当父组件通过 provide 提供数据时，这些数据被注入到子组件的 inject 属性中。然而，这些数据不会自动触发子组件的重新渲染。如果 provide 提供的数据发生了变化，子组件不会自动感知到这些变化并更新。
+        这是因为 provide 和 inject 是一种更加底层的 API，它们是基于依赖注入的方式来传递数据，而不是通过响应式系统来实现数据的更新和同步
+    */
+    <script>
+     // 父组件
+    export default {
+    provide() {
+    return {
+      someData: this.someData // 假设this.someData是一个响应式数据属性
+    };
+  },
+  data() {
+    return {
+      someData: 'initial value'
+    };
+  },
+  // ... 其他选项和方法
+};
+ 
+// 子组件
+export default {
+  inject: ['someData'],
+  watch: {
+    someData(newVal, oldVal) {
+      // 当someData发生变化时，这个函数会被调用
+      console.log('someData changed from', oldVal, 'to', newVal);
+      // 在这里执行你希望在数据变化时进行的操作
+      // 例如，更新子组件的状态或调用其他方法
+    }
+  },
+};
+</script>
 </body>
 </html>
